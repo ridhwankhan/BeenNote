@@ -1,43 +1,71 @@
-# 🐝 BeeNote: A Rate-Limited MERN Stack Note-Taking Application
+# 🐝 BeeNote: Secure & Scalable MERN Note-Taking App
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Stack-MERN-00FF9D?style=for-the-badge&logo=react&logoColor=black" alt="MERN Stack Badge"/>
-  <img src="https://img.shields.io/badge/Frontend-Vite%20%26%20Tailwind-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite & Tailwind Badge"/>
-  <img src="https://img.shields.io/badge/Rate%20Limit-Upstash%20Redis-FF6347?style=for-the-badge&logo=redis&logoColor=white" alt="Rate Limit Badge"/>
-  <img src="https://img.shields.io/badge/Database-MongoDB%20%26%20Mongoose-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB Badge"/>
+  <img alt="React" src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black"/>
+  <img alt="Express.js" src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white"/>
+  <img alt="MongoDB" src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white"/>
+  <img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white"/>
+  <img alt="Upstash Redis" src="https://img.shields.io/badge/Rate_Limit-Upstash%20Redis-FF4444?style=for-the-badge&logo=redis&logoColor=white"/>
 </p>
 
-## ✨ Core Features & Tech Highlights
+A high-performance, full-stack note application built with the **MERN** stack, emphasizing a smooth user experience and essential API security through rate limiting.
 
-BeeNote is a robust, full-stack application for managing notes. It demonstrates a complete modern MERN architecture.
+## ✨ Features & Highlights
 
-### 🔑 Robust Backend
+| Feature | Description | Reference |
+| :--- | :--- | :--- |
+| **Robust CRUD API** | Standard RESTful endpoints allow for comprehensive management of notes, with results sorted descending by creation time. | `backend/src/controllers/notesController.js` |
+| **Sliding Window Rate Limiter** | Prevents API abuse by limiting clients to **100 requests per 60 seconds** across all endpoints, implemented using `@upstash/ratelimit`. | `backend/src/middleware/rateLimiter.js` |
+| **Dynamic UI & UX** | Built with **React** and **Vite**, featuring modern styling via **Tailwind CSS** and the high-contrast `forest` theme from **DaisyUI**. | `frontend/src/pages/HomePage.jsx` |
+| **Error Handling** | Dedicated client-side component and logic to display a clear visual warning when the backend responds with a **429 (Too Many Requests)** status. | `frontend/src/components/RateLimitedUI.jsx` |
+| **Simplified Workflow**| The root `package.json` includes scripts for a one-step installation/build process and a single command to start the production server. | `package.json` |
 
-* **API Endpoints:** A well-defined RESTful API handles all note operations (CRUD: Create, Read, Update, Delete) via `/api/notes`.
-* **Data Persistence:** Uses **MongoDB** for flexible data storage, managed through the **Mongoose** ODM.
-* **Security & Stability:** Implements a sliding window **Rate Limiter** powered by **Upstash Redis**, allowing only 100 requests per minute to protect the API.
+## 📸 Application Views
 
-### 🎨 Modern Frontend
+| Empty Home Screen | Create New Note | Home Screen with Data |
+| :---: | :---: | :---: |
+| <img src="./frontend/public/home.png" alt="Screenshot of the homepage showing the 'No notes yet' message and Create button" width="300"/> | <img src="./frontend/public/createNew.png" alt="Screenshot of the create new note page with empty fields and a required fields toast error" width="300"/> | <img src="./frontend/public/homeAfter.png" alt="Screenshot of the homepage after a note has been created, showing the note card and date" width="300"/> |
 
-* **Framework:** Built with **React** and bundled by **Vite** for ultra-fast development and Hot Module Replacement (HMR).
-* **Styling:** A sleek and responsive design using the **Tailwind CSS** framework, enhanced with the **DaisyUI** component library for a "forest" themed aesthetic.
-* **User Feedback:** Integrates `react-hot-toast` for non-blocking notifications on success, failure, and rate-limiting alerts.
-
-## 🛠️ Local Development Setup
+## ⚙️ Local Development Setup
 
 ### Prerequisites
-* Node.js (16+ recommended)
-* MongoDB Atlas or a local MongoDB instance.
-* Upstash Redis REST URL and Token.
+* **Node.js** (LTS recommended)
+* **MongoDB URI** for database connection (e.g., MongoDB Atlas).
+* **Upstash Redis** REST URL and Token for rate limiting.
 
-### 1. Environment Configuration
+### Installation
 
-Create a file named `.env` in the `backend/` directory and populate it with your specific connection details:
+1.  **Clone the Repository:**
+    ```bash
+    git clone your-repo-url
+    cd mern-beenote
+    ```
+2.  **Setup Environment:** Create a **`.env`** file inside the `backend/` directory with your credentials:
+    ```bash
+    # backend/.env
+    MONGO_URI="your_mongodb_connection_string"
+    UPSTASH_REDIS_REST_URL="your_upstash_redis_url"
+    UPSTASH_REDIS_REST_TOKEN="your_upstash_redis_token"
+    NODE_ENV=development # Used for CORS and API base URL
+    PORT=5001
+    ```
 
+### Running Locally
+
+Use separate terminals to run the backend API and the frontend client simultaneously:
+
+**1. Start the Backend API (with hot-reloading for development)**
 ```bash
-# backend/.env example:
-MONGO_URI=your_mongodb_connection_string
-UPSTASH_REDIS_REST_URL="your_upstash_redis_url"
-UPSTASH_REDIS_REST_TOKEN="your_upstash_redis_token"
-NODE_ENV=development
-PORT=5001
+cd backend
+npm run dev
+# Server started on PORT: 5001
+```
+**2. Start the Frontend Client (Vite development server) **
+```bash
+cd frontend
+npm run dev
+# Client available at http://localhost:5173
+```
+
+
+
